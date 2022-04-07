@@ -27,7 +27,7 @@
       }
     },
     "BoomiAuthenticationType": {
-        "defaultValue": "token",
+        "defaultValue": "Token",
         "allowedValues": [
           "Token",
           "Password"
