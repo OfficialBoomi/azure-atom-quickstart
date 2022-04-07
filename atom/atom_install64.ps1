@@ -30,7 +30,7 @@ Invoke-WebRequest -Uri 'https://platform.boomi.com/atom/atom_install64.exe' -Use
 
 # Create Args
 
-if ( "Token" -eq $BoomiAuthenticationType )
+if ( $BoomiAuthenticationType.Trim() -eq "Token" )
 {
     $InstallerArgs = @("-q", "`"-VinstallToken=$installToken`"", "`"-VatomName=$AtomName`"", "`"-VaccountId=$AccountId`"",  "-dir", "`"$AtomDirectory`"")
 }
