@@ -22,7 +22,7 @@ $Installer = "$PSScriptRoot\installer.exe"
 
 # Create a custom User Agent
 $UserAgent = 'Boomi/AzureMarketplace'
-
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 # Download the latest installer from platform
 Invoke-WebRequest -Uri 'https://platform.boomi.com/atom/atom_install64.exe' -UserAgent $UserAgent -OutFile $Installer
 
