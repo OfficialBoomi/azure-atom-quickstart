@@ -115,6 +115,7 @@
                         "name": "user",
                         "type": "Microsoft.Common.TextBox",
                         "label": "User name",
+                        "defaultValue": "",
                         "toolTip": "AtomSphere user name."
                     },
                     {
