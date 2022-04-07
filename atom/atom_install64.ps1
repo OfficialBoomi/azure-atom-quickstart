@@ -8,8 +8,7 @@
 # $AtomDirectory = The base directory where the Atom will be installed
 
 Param(
-    [string]$User=$(throw "User is mandatory, please provide a value."),
-    [string]$Password=$(throw "Password is mandatory, please provide a value."),
+    [string]$installToken=$(throw "Password is mandatory, please provide a value."),
     [string]$AtomName=$(throw "AtomName is mandatory, please provide a value."),
     [string]$AccountId=$(throw "AccountId is mandatory, please provide a value."),
     [string]$AtomDirectory=$(throw "AtomDirectory is mandatory, please provide a value.")
@@ -27,7 +26,7 @@ $UserAgent = 'Boomi/AzureMarketplace'
 Invoke-WebRequest -Uri 'https://platform.boomi.com/atom/atom_install64.exe' -UserAgent $UserAgent -OutFile $Installer
 
 # Create Args
-$InstallerArgs = @("-q", "`"-Vusername=$User`"", "`"-Vpassword=$Password`"", "`"-VatomName=$AtomName`"", "`"-VaccountId=$AccountId`"",  "-dir", "`"$AtomDirectory`"")
+$InstallerArgs = @("-q", "`"-VinstallToken=$installToken`"", "`"-VatomName=$AtomName`"", "`"-VaccountId=$AccountId`"",  "-dir", "`"$AtomDirectory`"")
 
 # Run the installer
 Start-Process -FilePath $Installer -ArgumentList $InstallerArgs -WindowStyle Hidden -Wait
