@@ -128,7 +128,7 @@
                             "password": "Password",
                             "confirmPassword": "Confirm password"
                         },
-                        "toolTip": "AtomSphere password.",
+                        "toolTip": "AtomSphere password."
                     },
                     {
                         "name": "BoomiMFAAPIToken",
