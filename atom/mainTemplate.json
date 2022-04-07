@@ -62,7 +62,7 @@
         "description": "The base Url for dependent assets",
         "artifactsBaseUrl": ""
       },
-      "defaultValue" : "https://platform.boomi.com/atom/"
+      "defaultValue" : "https://raw.githubusercontent.com/OfficialBoomi/azure-atom-quickstart/Development/atom/"
     }
   },
   "variables": {
