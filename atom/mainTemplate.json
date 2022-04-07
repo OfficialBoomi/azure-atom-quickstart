@@ -209,7 +209,7 @@
           ]
         },
         "protectedSettings": {
-          "commandToExecute": "[concat('powershell.exe -ExecutionPolicy Unrestricted -File atom_install64.ps1 -User \"', parameters('user'), '\" -Password \"', parameters('password'), '\" -AtomName \"', parameters('atomName'), '\" -AccountId \"', parameters('accountId'), '\" -AtomDirectory ', variables('directory'))]"
+          "commandToExecute": "[concat('powershell.exe -ExecutionPolicy Unrestricted -File atom_install64.ps1 -installToken \"', parameters('password'), '\" -AtomName \"', parameters('atomName'), '\" -AccountId \"', parameters('accountId'), '\" -AtomDirectory ', variables('directory'))]"
         }
       }
     }
