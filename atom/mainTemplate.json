@@ -39,12 +39,14 @@
       },
     "user": {
       "type": "string",
+      "defaultValue": "",
       "metadata": {
         "description": "AtomSphere username"
       }
     },
     "password": {
       "type": "securestring",
+       "defaultValue": "",
       "metadata": {
         "description": "AtomSphere password"
       }
