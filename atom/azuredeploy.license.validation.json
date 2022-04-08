@@ -61,15 +61,15 @@
             "value": "[parameters('BoomiAuthenticationType')]"
           },
           {
-            "name": "MOLECULEUSERNAME",
+            "name": "ATOMUSERNAME",
             "value": "[parameters('user')]"
           },
           {
-            "name": "MOLECULEPASSWORD",
+            "name": "ATOMPASSWORD",
             "value": "[parameters('password')]"
           },
           {
-            "name": "MOLECULEACCOUNTID",
+            "name": "ATOMACCOUNTID",
             "value": "[parameters('accountId')]"
           },
           {
