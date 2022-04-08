@@ -77,7 +77,7 @@
             "value": "[parameters('BoomiMFAInstallToken')]"
           }
         ],
-        "primaryScriptUri": "https://raw.githubusercontent.com/OfficialBoomi/azure-atom-quickstar/Development/scripts/license_validation.sh",
+        "primaryScriptUri": "https://raw.githubusercontent.com/OfficialBoomi/azure-atom-quickstart/Development/scripts/license_validation.sh",
         "cleanupPreference": "Always",
         "retentionInterval": "P1D"
       }
