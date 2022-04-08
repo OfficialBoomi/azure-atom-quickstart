@@ -20,7 +20,7 @@
         "description": "The email account associated with the Boomi account."
       }
     },
-    "BoomiMFAInstallToken": {
+    "BoomiMFAAPIToken": {
       "defaultValue": "",
       "type": "securestring",
       "metadata": {
@@ -74,7 +74,7 @@
           },
           {
             "name": "BOOMIMFAAPITOKEN",
-            "value": "[parameters('BoomiMFAInstallToken')]"
+            "value": "[parameters('BoomiMFAAPIToken')]"
           }
         ],
         "primaryScriptUri": "https://raw.githubusercontent.com/OfficialBoomi/azure-atom-quickstart/Development/scripts/license_validation.sh",
