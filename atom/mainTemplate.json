@@ -51,7 +51,7 @@
         "description": "AtomSphere password"
       }
     },
-     "BoomiMFAInstallToken": {
+     "BoomiMFAAPIToken": {
         "defaultValue": "",
         "type": "securestring",
         "metadata": {
@@ -104,6 +104,35 @@
     "directory": "C:\\"
   },
   "resources": [
+      {
+      "name": "BoomiLicenseValidation",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2021-04-01",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "https://raw.githubusercontent.com/OfficialBoomi/azure-atom-quickstart/Development/atom/azuredeploy.license.validation.json",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "BoomiAuthenticationType": {
+            "value": "[parameters('BoomiAuthenticationType')]"
+          },
+          "BoomiAccountID": {
+            "value": "[parameters('accountId')]"
+          },
+          "BoomiUsername": {
+            "value": "[parameters('user')]"
+          },
+          "BoomiMFAAPIToken": {
+            "value": "[parameters('BoomiMFAAPIToken')]"
+          },
+          "BoomiPassword": {
+            "value": "[parameters('Password')]"
+          }
+        }
+      }
+    },
     {
       "type": "Microsoft.Storage/storageAccounts",
       "name": "[variables('storageAccountName')]",
@@ -229,9 +258,15 @@
           ]
         },
         "protectedSettings": {
-          "commandToExecute": "[concat('powershell.exe -ExecutionPolicy Unrestricted -File atom_install64.ps1 -BoomiAuthenticationType \"', parameters('BoomiAuthenticationType'), '\" -User \"', parameters('user'), '\" -Password \"', parameters('password'),'\" -installToken \"', parameters('BoomiMFAInstallToken'), '\" -AtomName \"', parameters('atomName'), '\" -AccountId \"', parameters('accountId'), '\" -AtomDirectory ', variables('directory'))]"
+        "commandToExecute": "[concat('powershell.exe -ExecutionPolicy Unrestricted -File atom_install64.ps1 -BoomiAuthenticationType \"', parameters('BoomiAuthenticationType'), '\" -User \"', parameters('user'), '\" -Password \"', parameters('password'), '\" -installToken \"', reference('BoomiLicenseValidation').outputs.installationToken.value, '\" -AtomName \"', parameters('atomName'), '\" -AccountId \"', parameters('accountId'), '\" -AtomDirectory ', variables('directory'))]"
         }
       }
     }
-  ]
+  ],
+  "outputs": {
+    "licenseValidation": {
+      "type": "string",
+      "value": "[reference('BoomiLicenseValidation').outputs.licenseValidation.value]"
+    }
+  }
 }
