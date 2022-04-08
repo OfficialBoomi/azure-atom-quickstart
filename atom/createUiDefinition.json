@@ -116,6 +116,11 @@
                         "type": "Microsoft.Common.TextBox",
                         "label": "User name",
                         "defaultValue": "",
+                        "constraints": {
+                              "required": true,
+                              "regex": "^.+@.+$",
+                              "validationMessage": "The AtomSphere user name must be an email address"
+                                      },
                         "toolTip": "AtomSphere user name."
                     },
                     {
