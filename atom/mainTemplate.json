@@ -85,7 +85,7 @@
       "defaultValue" : "https://raw.githubusercontent.com/OfficialBoomi/azure-atom-quickstart/Development/atom/"
     }
   },
-
+  
   "resources": [
       {
       "name": "BoomiLicenseValidation",
@@ -118,7 +118,6 @@
     },
     {
       "name": "BoomiAtomQuickStart",
-     
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2021-04-01",
       "dependsOn": ["BoomiLicenseValidation"],
@@ -164,7 +163,11 @@
           },
           "baseUrl": {
             "value": "[parameters('baseUrl')]"
-          }      
+          },
+           "deploymentCondition": {
+            "value": "[reference('BoomiLicenseValidation').outputs.licenseValidation.value]"
+           }
+     
         }
       }
     }
