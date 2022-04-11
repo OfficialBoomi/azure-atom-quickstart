@@ -17,30 +17,6 @@ def _verify_boomi_licensing(username, password, account):
     API_URL = f"https://api.boomi.com/api/rest/v1/{account}/Account/{account}"
     resp = requests.get(API_URL, headers=_headers)
     resp.raise_for_status()
-    json_resp = resp.json()
-
-    account_status = json_resp["status"]
-    molecule_licenses_purchased = json_resp["molecule"]["purchased"]
-    molecule_licenses_used = json_resp["molecule"]["used"]
-
-    # Is the account active?
-    if account_status == "active":
-        logger.info(f"Account is active")
-    else:
-        logger.error("Exception: Boomi account is inactive")
-        raise Exception(f"Boomi account {account} is inactive.")
-
-    # Do we have license entitlements at all?
-    if molecule_licenses_purchased > molecule_licenses_used:
-        logger.info(
-            f"Licenses are available - Purchased: {molecule_licenses_purchased} / Used: {molecule_licenses_used}"
-        )
-    else:
-        logger.error("Exception: No enterprise license available")
-        raise Exception(
-            f"No Molecule licenses for account {account} are available. Purchased: {molecule_licenses_purchased}, Used: {molecule_licenses_used}"
-        )
-
 
 def _generate_install_token(username, password, account_id, token_type, timeout):
     REQ_TOKEN_TYPES = ["ATOM"]
@@ -60,7 +36,7 @@ def _generate_install_token(username, password, account_id, token_type, timeout)
 
 def auth_and_licensing_logic(username, password, account_id, token_type, token_timeout):
     # Verify licensing
-    #_verify_boomi_licensing(username, password, account_id)
+    _verify_boomi_licensing(username, password, account_id)
     if username.startswith("BOOMI_TOKEN."):
         # Generate install token
         token = _generate_install_token(
