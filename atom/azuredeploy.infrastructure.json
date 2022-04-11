@@ -1,7 +1,14 @@
 {
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
   "contentVersion": "1.0.0.0",
-  "parameters": {
+  "parameters": 
+  {
+      "deploymentCondition": {
+      "type": "string",
+      "metadata": {
+        "description": "Condition to check license is valid or not."
+      }
+    },
     "adminUsername": {
       "type": "string",
       "metadata": {
@@ -106,6 +113,7 @@
   "resources": [
     {
       "type": "Microsoft.Storage/storageAccounts",
+      "condition": "[equals(parameters('deploymentCondition'), 'SUCCESS')]",
       "name": "[variables('storageAccountName')]",
       "apiVersion": "2016-12-01",
       "location": "[parameters('location')]",
@@ -126,6 +134,7 @@
     },
     {
       "apiVersion": "[variables('apiVersion')]",
+      "condition": "[equals(parameters('deploymentCondition'), 'SUCCESS')]",
       "type": "Microsoft.Network/virtualNetworks",
       "name": "[variables('virtualNetworkName')]",
       "location": "[parameters('location')]",
