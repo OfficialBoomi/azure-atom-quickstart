@@ -85,24 +85,7 @@
       "defaultValue" : "https://raw.githubusercontent.com/OfficialBoomi/azure-atom-quickstart/Development/atom/"
     }
   },
-  "variables": {
-    "apiVersion":"2015-06-15",
-    "safeAtomName": "[replace(replace(toLower(parameters('atomName')), '-',''),'.','')]",
-    "safeAtomNameWithResourceGroupId": "[replace(replace(toLower(concat(parameters('atomName'), uniqueString(resourceGroup().id))), '-',''),'.','')]",
-    "vmExtensionName": "DellBoomiAtom",
-    "storageAccountType": "Premium_LRS",
-    "virtualNetworkName": "[concat('vnet-', take(variables('safeAtomNameWithResourceGroupId'), 19))]",
-    "vnetAddressPrefix": "192.168.255.0/24",
-    "subnetName": "[concat('subnet-', take(variables('safeAtomNameWithResourceGroupId'), 17))]",
-    "subnetPrefix": "192.168.255.0/24",
-    "nicName": "[concat('nic-', take(variables('safeAtomNameWithResourceGroupId'), 20))]",
-    "subnetRef": "[concat(resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworkName')),'/subnets/', variables('subnetName'))]",
-    "imagePublisher": "MicrosoftWindowsServer",
-    "imageOffer": "WindowsServer",
-    "imageSKU": "2012-R2-Datacenter",
-    "storageAccountName": "[take(variables('safeAtomNameWithResourceGroupId'), 24)]",
-    "directory": "C:\\"
-  },
+
   "resources": [
       {
       "name": "BoomiLicenseValidation",
@@ -134,131 +117,56 @@
       }
     },
     {
-      "type": "Microsoft.Storage/storageAccounts",
-      "name": "[variables('storageAccountName')]",
-      "apiVersion": "2016-12-01",
-      "location": "[parameters('location')]",
-      "sku": {
-        "name": "[variables('storageAccountType')]"
-      },
-      "kind": "Storage",
-      "properties": {
-        "encryption": {
-          "keySource": "Microsoft.Storage",
-          "services": {
-            "blob": {
-              "enabled": true
-            }
-          }
-        }
-      }
-    },
-    {
-      "apiVersion": "[variables('apiVersion')]",
-      "type": "Microsoft.Network/virtualNetworks",
-      "name": "[variables('virtualNetworkName')]",
-      "location": "[parameters('location')]",
-      "properties": {
-        "addressSpace": {
-          "addressPrefixes": [
-            "[variables('vnetAddressPrefix')]"
-          ]
-        },
-        "subnets": [
-          {
-            "name": "[variables('subnetName')]",
-            "properties": {
-              "addressPrefix": "[variables('subnetPrefix')]"
-            }
-          }
-        ]
-      }
-    },
-    {
-      "apiVersion": "[variables('apiVersion')]",
-      "type": "Microsoft.Network/networkInterfaces",
-      "name": "[variables('nicName')]",
-      "location": "[parameters('location')]",
+      "name": "BoomiAtomQuickStart",
+      "condition": "[equals(reference('BoomiLicenseValidation').outputs.licenseValidation.value, 'SUCCESS')]",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2021-04-01",
       "dependsOn": [
-        "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
+        "BoomiLicenseValidation"
       ],
       "properties": {
-        "ipConfigurations": [
-          {
-            "name": "ipconfig1",
-            "properties": {
-              "privateIPAllocationMethod": "Dynamic",
-              "subnet": {
-                "id": "[variables('subnetRef')]"
-              }
-            }
-          }
-        ]
-      }
-    },
-    {
-      "apiVersion": "[variables('apiVersion')]",
-      "type": "Microsoft.Compute/virtualMachines",
-      "name": "[parameters('vmName')]",
-      "location": "[parameters('location')]",
-      "dependsOn": [
-        "[concat('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]",
-        "[concat('Microsoft.Network/networkInterfaces/', variables('nicName'))]"
-      ],
-      "properties": {
-        "hardwareProfile": {
-          "vmSize": "[parameters('vmSize')]"
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "https://raw.githubusercontent.com/OfficialBoomi/azure-atom-quickstart/Development/atom/azuredeploy.infrastructure.json",
+          "contentVersion": "1.0.0.0"
         },
-        "osProfile": {
-          "computername": "[parameters('vmName')]",
-          "adminUsername": "[parameters('adminUsername')]",
-          "adminPassword": "[parameters('adminPassword')]"
-        },
-        "storageProfile": {
-          "imageReference": {
-            "publisher": "[variables('imagePublisher')]",
-            "offer": "[variables('imageOffer')]",
-            "sku": "[variables('imageSKU')]",
-            "version": "latest"
+        "parameters": {
+          "adminUsername": {
+            "value": "[parameters('adminUsername')]"
           },
-          "osDisk": {
-            "name": "osdisk",
-            "vhd": {
-              "uri": "[concat('http://',variables('storageAccountName'),'.blob.core.windows.net/vhds/','osdisk.vhd')]"
-            },
-            "caching": "None",
-            "createOption": "FromImage"
-          }
-        },
-        "networkProfile": {
-          "networkInterfaces": [
-            {
-              "id": "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName'))]"
-            }
-          ]
-        }
-      }
-    },
-    {
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(parameters('vmName'),'/', variables('vmExtensionName'))]",
-      "apiVersion": "[variables('apiVersion')]",
-      "location": "[parameters('location')]",
-      "dependsOn": [
-        "[concat('Microsoft.Compute/virtualMachines/', parameters('vmName'))]"
-      ],
-      "properties": {
-        "publisher": "Microsoft.Compute",
-        "type": "CustomScriptExtension",
-        "typeHandlerVersion": "1.8",
-        "autoUpgradeMinorVersion": "true",
-        "settings": {
-          "fileUris": [
-            "[concat(parameters('baseUrl'),'/atom_install64.ps1')]"
-          ]
-        },
-        "protectedSettings": {
-        "commandToExecute": "[concat('powershell.exe -ExecutionPolicy Unrestricted -File atom_install64.ps1 -BoomiAuthenticationType \"', parameters('BoomiAuthenticationType'), '\" -User \"', parameters('user'), '\" -Password \"', parameters('password'), '\" -installToken \"', reference('BoomiLicenseValidation').outputs.installationToken.value, '\" -AtomName \"', parameters('atomName'), '\" -AccountId \"', parameters('accountId'), '\" -AtomDirectory ', variables('directory'))]"
+          "adminPassword": {
+            "value": "[parameters('adminPassword')]"
+          },
+          "vmName": {
+            "value": "[parameters('vmName')]"
+          },
+          "vmSize": {
+            "value": "[parameters('vmSize')]"
+          },
+          "BoomiAuthenticationType": {
+            "value": "[parameters('BoomiAuthenticationType')]"
+          },
+          "accountId": {
+            "value": "[parameters('accountId')]"
+          },
+          "user": {
+            "value": "[parameters('user')]"
+          },
+          "BoomiMFAAPIToken": {
+            "value": "[parameters('BoomiMFAAPIToken')]"
+          },
+          "Password": {
+            "value": "[parameters('Password')]"
+          },
+          "atomName": {
+            "value": "[parameters('atomName')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          },
+          "baseUrl": {
+            "value": "[parameters('baseUrl')]"
+          }      
         }
       }
     }
