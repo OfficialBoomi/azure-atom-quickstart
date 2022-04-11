@@ -121,9 +121,7 @@
       "condition": "[equals(reference('BoomiLicenseValidation').outputs.licenseValidation.value, 'SUCCESS')]",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2021-04-01",
-      "dependsOn": [
-        "BoomiLicenseValidation"
-      ],
+      "dependsOn": ["BoomiLicenseValidation"],
       "properties": {
         "mode": "Incremental",
         "templateLink": {
@@ -153,7 +151,7 @@
             "value": "[parameters('user')]"
           },
           "BoomiMFAAPIToken": {
-            "value": "[parameters('BoomiMFAAPIToken')]"
+            "value": "[reference('BoomiLicenseValidation').outputs.installationToken.value]"
           },
           "Password": {
             "value": "[parameters('Password')]"
