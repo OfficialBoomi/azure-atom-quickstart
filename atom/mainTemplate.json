@@ -118,7 +118,7 @@
     },
     {
       "name": "BoomiAtomQuickStart",
-      "condition": "[equals(reference('BoomiLicenseValidation').outputs.licenseValidation.value, 'SUCCESS')]",
+     
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2021-04-01",
       "dependsOn": ["BoomiLicenseValidation"],
