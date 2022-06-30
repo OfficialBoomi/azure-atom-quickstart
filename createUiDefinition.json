@@ -115,7 +115,6 @@
                         "name": "user",
                         "type": "Microsoft.Common.TextBox",
                         "label": "User name",
-                        "defaultValue": "",
                         "constraints": {
                               "required": true,
                               "regex": "^.+@.+$",
@@ -178,7 +177,7 @@
             "BoomiMFAAPIToken": "[steps('atomshpereUserInformation').BoomiMFAAPIToken]",
             "accountId": "[steps('atomshpereUserInformation').accountId]",
             "atomName": "[steps('atomshpereUserInformation').atomName]",
-            "location": "[location()]"
+            "location": "[resourceGroup().location]"
         }
     }
 }
