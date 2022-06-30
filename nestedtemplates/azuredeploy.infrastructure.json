@@ -199,7 +199,7 @@
             "osDisk": {
               "name": "osdisk",
               "vhd": {
-                "uri": "[concat('http://',variables('storageAccountName'),'.blob.core.windows.net/vhds/','osdisk.vhd')]"
+                  "uri":"[concat(reference(concat('Microsoft.Storage/storageAccounts/', variables('storageAccountName')), '2021-09-01').primaryEndpoints.blob, '.blob.core.windows.net/vhds/','osdisk.vhd')]"
               },
               "caching": "None",
               "createOption": "FromImage"
