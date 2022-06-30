@@ -35,9 +35,18 @@
       "utcValue": {
         "type": "string",
         "defaultValue": "[utcNow()]"
+      },
+      "_artifactsLocation": {
+      "type" : "string",
+      "metadata" : {
+        "description": "The base Url for dependent assets",
+        "artifactsBaseUrl": ""
       }
+    }
     },
-    "variables": {},
+    "variables": {
+        "nestedtemplateUri1": "[uri(parameters('_artifactsLocation'), concat('scripts/license_validation.sh'))]"
+    },
     "resources": [
       {
         "type": "Microsoft.Resources/deploymentScripts",
@@ -75,7 +84,7 @@
               "value": "[parameters('BoomiMFAAPIToken')]"
             }
           ],
-          "primaryScriptUri": "https://raw.githubusercontent.com/OfficialBoomi/azure-atom-quickstart/Development/scripts/license_validation.sh",
+          "primaryScriptUri": "[variables('nestedtemplateUri1')]",
           "cleanupPreference": "Always",
           "retentionInterval": "P1D"
         }
