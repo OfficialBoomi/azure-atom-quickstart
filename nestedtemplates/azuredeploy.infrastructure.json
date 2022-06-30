@@ -88,7 +88,6 @@
       }
     },
     "variables": {
-      "apiVersion":"2022-01-01",
       "safeAtomNameWithResourceGroupId": "[replace(replace(toLower(concat(parameters('atomName'), uniqueString(resourceGroup().id))), '-',''),'.','')]",
       "vmExtensionName": "DellBoomiAtom",
       "storageAccountType": "Premium_LRS",
@@ -128,7 +127,7 @@
         }
       },
       {
-        "apiVersion": "[variables('apiVersion')]",
+        "apiVersion": "2022-01-01",
         "condition": "[equals(parameters('deploymentCondition'), 'SUCCESS')]",
         "type": "Microsoft.Network/virtualNetworks",
         "name": "[variables('virtualNetworkName')]",
@@ -150,7 +149,7 @@
         }
       },
       {
-        "apiVersion": "[variables('apiVersion')]",
+        "apiVersion": "2022-01-01",
         "type": "Microsoft.Network/networkInterfaces",
         "name": "[variables('nicName')]",
         "location": "[parameters('location')]",
