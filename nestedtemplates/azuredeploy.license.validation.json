@@ -45,7 +45,9 @@
     }
     },
     "variables": {
-        "nestedtemplateUri1": "[uri(parameters('_artifactsLocation'), concat('scripts/license_validation.sh'))]"
+        "nestedtscriptUri1": "[uri(parameters('_artifactsLocation'), concat('scripts/license_validation.sh'))]",
+        "nestedtscriptUri2": "[uri(parameters('_artifactsLocation'), concat('scripts/requirements.txt'))]",
+        "nestedtscriptUri3": "[uri(parameters('_artifactsLocation'), concat('scripts/license_validation.py'))]"
     },
     "resources": [
       {
@@ -82,9 +84,17 @@
             {
               "name": "BOOMIMFAAPITOKEN",
               "value": "[parameters('BoomiMFAAPIToken')]"
+            },
+            {
+              "name": "REQTXT",
+              "value": "[variables('nestedtscriptUri2')]"
+            },
+            {
+              "name": "LICENSEVALIDATION",
+              "value": "[variables('nestedtscriptUri3')]"
             }
           ],
-          "primaryScriptUri": "[variables('nestedtemplateUri1')]",
+          "primaryScriptUri": "[variables('nestedtscriptUri1')]",
           "cleanupPreference": "Always",
           "retentionInterval": "P1D"
         }
