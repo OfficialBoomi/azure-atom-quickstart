@@ -122,6 +122,9 @@
           },
           "Password": {
             "value": "[parameters('Password')]"
+          },
+          "_artifactsLocation" :{
+            "value": "[parameters('_artifactsLocation')]"
           }
         }
       }
