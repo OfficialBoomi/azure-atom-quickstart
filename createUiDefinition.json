@@ -177,7 +177,7 @@
             "BoomiMFAAPIToken": "[steps('atomshpereUserInformation').BoomiMFAAPIToken]",
             "accountId": "[steps('atomshpereUserInformation').accountId]",
             "atomName": "[steps('atomshpereUserInformation').atomName]",
-            "location": "[resourceGroup().location]"
+            "location": "[location()]"
         }
     }
 }
