@@ -1,7 +1,7 @@
 #!/bin/bash
 
-wget https://raw.githubusercontent.com/OfficialBoomi/azure-atom-quickstart/Development/scripts/requirements.txt
-wget https://raw.githubusercontent.com/OfficialBoomi/azure-atom-quickstart/Development/scripts/license_validation.py
+wget ${REQTXT}
+wget ${LICENSEVALIDATION}
 
 pip install -t . -r ./requirements.txt
 
