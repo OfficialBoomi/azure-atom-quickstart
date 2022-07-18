@@ -116,7 +116,7 @@
                     },
                     {
                         "name": "user",
-                        "type": "Microsoft.Compute.UserNameTextBox",
+                        "type": "Microsoft.Common.TextBox",
                         "label": "User name",
                         "constraints": {
                               "required": true,
