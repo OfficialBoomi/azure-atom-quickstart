@@ -17,7 +17,7 @@
                 "label": {
                     "password": "Password",
                     "confirmPassword": "Confirm password"
-                },
+                },             
                 "toolTip": {
                     "password": "Admin password for the virtual machine."
                 },
@@ -40,7 +40,10 @@
                         "label": "Virtual machine name",
                         "toolTip": "The name of the virtual machine.",
                         "constraints": {
-                            "required": true
+                            "required": true,
+                            "regex": "^((?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])).{5,72}$",
+                            "validationMessage": "vm name must be atleast 5 characters long and should not contain special characters"
+                     
                         }
                     },
                     {
@@ -113,7 +116,7 @@
                     },
                     {
                         "name": "user",
-                        "type": "Microsoft.Common.TextBox",
+                        "type": "Microsoft.Compute.UserNameTextBox",
                         "label": "User name",
                         "constraints": {
                               "required": true,
@@ -129,19 +132,25 @@
                             "password": "Password",
                             "confirmPassword": "Confirm password"
                         },
-                        "toolTip": "AtomSphere password."
+                        "toolTip": "AtomSphere password.",
+                        "constraints": {
+                            "required": false
+                            
+                        }
                     },
                     {
                         "name": "BoomiMFAAPIToken",
                         "type": "Microsoft.Common.PasswordBox",
                         "label": {
-                            "password": "Boomi API Token",
-                            "confirmPassword": "Confirm Boomi MFA Install Token"
+                            "password": "Boomi AtomSphere API Token",
+                            "confirmPassword": "Confirm Boomi AtomSphere API Token"
                         },
                         "toolTip": "Boomi token needed when authentication type is Token",
-                        "options": {
-                            "hideConfirmation": true
+                        "constraints": {
+                            "required": false
+                     
                         }
+                        
                     },
                     {
                         "name": "accountId",
@@ -160,7 +169,9 @@
                         "label": "Atom name",
                         "toolTip": "A name for the Atom that is being installed.",
                         "constraints": {
-                            "required": true
+                            "required": true,
+                            "regex": "^\\w{1,32}$",
+                            "validationMessage": "atom name must be between 1 and 32 characters long."
                         }
                     }
                 ]
