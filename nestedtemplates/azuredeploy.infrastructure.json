@@ -1,5 +1,5 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": 
     {
@@ -82,8 +82,7 @@
       "baseUrl": {
         "type" : "string",
         "metadata" : {
-          "description": "The base Url for dependent assets",
-          "artifactsBaseUrl": ""
+          "description": "The base Url for dependent assets"
         }
       }
     },
@@ -96,7 +95,7 @@
       "subnetName": "[concat('subnet-', take(variables('safeAtomNameWithResourceGroupId'), 17))]",
       "subnetPrefix": "192.168.255.0/24",
       "nicName": "[concat('nic-', take(variables('safeAtomNameWithResourceGroupId'), 20))]",
-      "subnetRef": "[concat(resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworkName')),'/subnets/', variables('subnetName'))]",
+      "subnetref" : "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnetName'))]",
       "imagePublisher": "MicrosoftWindowsServer",
       "imageOffer": "WindowsServer",
       "imageSKU": "2012-R2-Datacenter",
@@ -154,7 +153,7 @@
         "name": "[variables('nicName')]",
         "location": "[parameters('location')]",
         "dependsOn": [
-          "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
+          "[string(concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName')))]"
         ],
         "properties": {
           "ipConfigurations": [
@@ -176,8 +175,8 @@
         "name": "[parameters('vmName')]",
         "location": "[parameters('location')]",
         "dependsOn": [
-          "[concat('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]",
-          "[concat('Microsoft.Network/networkInterfaces/', variables('nicName'))]"
+          "[string(concat('Microsoft.Storage/storageAccounts/', variables('storageAccountName')))]",
+          "[string(concat('Microsoft.Network/networkInterfaces/', variables('nicName')))]"
         ],
         "properties": {
           "hardwareProfile": {
@@ -198,7 +197,7 @@
             "osDisk": {
               "name": "osdisk",
               "vhd": {
-                  "uri":"[concat(reference(concat('Microsoft.Storage/storageAccounts/', variables('storageAccountName')), '2021-09-01').primaryEndpoints.blob, 'vhds/','osdisk.vhd')]"
+                  "uri": "[concat('http://',variables('storageAccountName'),'.blob.core.windows.net/vhds/','osdisk.vhd')]"
               },
               "caching": "None",
               "createOption": "FromImage"
@@ -207,7 +206,7 @@
           "networkProfile": {
             "networkInterfaces": [
               {
-                "id": "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName'))]"
+               "id": "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName'))]"
               }
             ]
           }
@@ -219,7 +218,7 @@
         "apiVersion": "2022-03-01",
         "location": "[parameters('location')]",
         "dependsOn": [
-          "[concat('Microsoft.Compute/virtualMachines/', parameters('vmName'))]"
+          "[string(concat('Microsoft.Compute/virtualMachines/', parameters('vmName')))]"
         ],
         "properties": {
           "publisher": "Microsoft.Compute",
