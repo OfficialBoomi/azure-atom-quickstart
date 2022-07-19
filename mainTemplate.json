@@ -81,7 +81,7 @@
       "metadata" : {
         "description": "The base Url for dependent assets"
       },
-      "defaultValue": "[concat(deployment().properties.templateLink.uri,'/')]"
+      "defaultValue": "[deployment().properties.templateLink.uri]"
     },
     "_artifactsLocationSasToken": {
           "type": "securestring",
