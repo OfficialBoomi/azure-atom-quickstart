@@ -160,7 +160,7 @@
                         "constraints": {
                             "required": true,
                             "regex": "^\\w{1,25}-\\w{6}$",
-                            "validationMessage": "Account ID must be between 8 and 32 characters long.  It can be found on the Account Information tab in the Setup page."
+                            "validationMessage": "Account ID is not valid. It can be found on the Account Information tab in the Setup page."
                         }
                     },
                     {
@@ -171,7 +171,7 @@
                         "constraints": {
                             "required": true,
                             "regex": "^\\w{1,32}$",
-                            "validationMessage": "atom name must be between 1 and 32 characters long."
+                            "validationMessage": "Atom name must be between 1 and 32 characters long."
                         }
                     }
                 ]
