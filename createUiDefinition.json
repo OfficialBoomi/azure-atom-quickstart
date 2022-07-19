@@ -41,7 +41,7 @@
                         "toolTip": "The name of the virtual machine.",
                         "constraints": {
                             "required": true,
-                            "regex": "^\\w{1,64}$",
+                            "regex": "^\\w{1,64}",
                             "validationMessage": "atom name must be between 1 and 64 characters long."
                      
                         }
