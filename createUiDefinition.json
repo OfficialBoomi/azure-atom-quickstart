@@ -170,7 +170,7 @@
                         "toolTip": "A name for the Atom that is being installed.",
                         "constraints": {
                             "required": true,
-                            "regex": "^\\w{1,32}$",
+                            "regex": "^\\w{1,32}",
                             "validationMessage": "Atom name must be between 1 and 32 characters long."
                         }
                     }
