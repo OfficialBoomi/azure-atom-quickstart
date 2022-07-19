@@ -101,9 +101,8 @@
       "imageSKU": "2012-R2-Datacenter",
       "storageAccountName": "[take(variables('safeAtomNameWithResourceGroupId'), 24)]",
       "directory": "C:\\",
-      "nestedscriptUri": "[uri(parameters('baseUrl'), concat('atom_install64.ps1'))]",
-      "vhduripre" :"[concat(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')).primaryEndpoints.blob,'vhds/osdisk.vhd')]",
-      "vhduri": "[variables('vhduripre')]"
+      "nestedscriptUri": "[uri(parameters('baseUrl'), concat('atom_install64.ps1'))]"
+      
     },
     "resources": [
       {
@@ -199,7 +198,7 @@
             "osDisk": {
               "name": "osdisk",
               "vhd": {
-                  "uri": "[variables('vhduri')]"
+                  "uri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))).primaryEndpoints.blob,'vhds/osdisk.vhd')]"
               },
               "caching": "None",
               "createOption": "FromImage"
