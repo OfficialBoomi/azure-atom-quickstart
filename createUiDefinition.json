@@ -42,7 +42,7 @@
                         "constraints": {
                             "required": true,
                             "regex": "^\\w{1,64}",
-                            "validationMessage": "atom name must be between 1 and 64 characters long."
+                            "validationMessage": "Virtual machine name must be between 1 and 64 characters long and special characters are not allowed."
                      
                         }
                     },
