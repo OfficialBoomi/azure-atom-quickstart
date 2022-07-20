@@ -41,7 +41,7 @@
                         "toolTip": "The name of the virtual machine.",
                         "constraints": {
                             "required": true,
-                            "regex": "^([-\\w\\._\\(\\)]+)$",
+                            "regex": "^([-\\w\\._\\(\\)]{1,64})$",
                             "validationMessage": "Virtual machine name must be between 1 and 64 characters long and no special characters are allowed."
                      
                         }
