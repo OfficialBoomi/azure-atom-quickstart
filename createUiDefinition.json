@@ -137,7 +137,7 @@
                         },
                         "toolTip": "AtomSphere password.",
                         "constraints": {
-                            "required": false      
+                            "required": true      
                         },
                         "visible": "[if(equals(steps('atomshpereUserInformation').BoomiAuthenticationType,'Password'),true,false)]"
                     },
@@ -153,7 +153,7 @@
                             "hideConfirmation": false
                         },
                         "constraints": {
-                            "required": false                  
+                            "required": true                  
                         },
                         "visible": "[if(equals(steps('atomshpereUserInformation').BoomiAuthenticationType,'Token'),true,false)]"
                         
