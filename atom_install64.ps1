@@ -10,20 +10,12 @@
 Param(
     [string]$BoomiAuthenticationType,
     [string]$User,
-    [string]$installToken,
     [string]$Password,
-    [string]$AccountId,
-    [string]$AtomName,
-    [string]$AtomDirectory
+    [string]$installToken,
+    [string]$AtomName=$(throw "AtomName is mandatory, please provide a value."),
+    [string]$AccountId=$(throw "AccountId is mandatory, please provide a value."),
+    [string]$AtomDirectory=$(throw "AtomDirectory is mandatory, please provide a value.")
 )
-
-echo $BoomiAuthenticationType
-echo $User
-echo $installToken
-echo $Password
-echo $AccountId
-echo $AtomName
-echo $AtomDirectory
 
 $Installer = "$PSScriptRoot\installer.exe"
 
