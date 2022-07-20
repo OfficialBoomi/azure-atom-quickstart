@@ -12,8 +12,8 @@ Param(
     [string]$User,
     [string]$Password,
     [string]$installToken,
-    [string]$AtomName=$(throw "AtomName is mandatory, please provide a value."),
     [string]$AccountId=$(throw "AccountId is mandatory, please provide a value."),
+    [string]$AtomName=$(throw "AtomName is mandatory, please provide a value."),
     [string]$AtomDirectory=$(throw "AtomDirectory is mandatory, please provide a value.")
 )
 
