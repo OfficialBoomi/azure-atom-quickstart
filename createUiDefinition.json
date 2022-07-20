@@ -132,11 +132,14 @@
                             "password": "Password",
                             "confirmPassword": "Confirm password"
                         },
+                        "options": {
+                            "hideConfirmation": false
+                        },
                         "toolTip": "AtomSphere password.",
                         "constraints": {
-                            "required": false
-                            
-                        }
+                            "required": false      
+                        },
+                        "visible": "[if(equals(steps('atomshpereUserInformation').BoomiAuthenticationType,'Password'),true,false)]"
                     },
                     {
                         "name": "BoomiMFAAPIToken",
@@ -146,17 +149,20 @@
                             "confirmPassword": "Confirm Boomi AtomSphere API Token"
                         },
                         "toolTip": "Boomi token needed when authentication type is Token",
+                        "options": {
+                            "hideConfirmation": false
+                        },
                         "constraints": {
-                            "required": false
-                     
-                        }
+                            "required": false                  
+                        },
+                        "visible": "[if(equals(steps('atomshpereUserInformation').BoomiAuthenticationType,'Token'),true,false)]"
                         
                     },
                     {
                         "name": "accountId",
                         "type": "Microsoft.Common.TextBox",
                         "label": "AtomSphere account ID",
-                        "toolTip": "The ID of the Dell Boomi account where the Atom will be installed.",
+                        "toolTip": "The ID of the Boomi account where the Atom will be installed.",
                         "constraints": {
                             "required": true,
                             "regex": "^\\w{1,25}-\\w{6}$",
@@ -170,8 +176,8 @@
                         "toolTip": "A name for the Atom that is being installed.",
                         "constraints": {
                             "required": true,
-                            "regex": "^\\w{1,32}",
-                            "validationMessage": "Atom name must be between 1 and 32 characters long."
+                            "regex": "^.{1,255}$",
+                            "validationMessage": "Atom name must be between 1 and 255 characters long"
                         }
                     }
                 ]
@@ -184,8 +190,8 @@
             "vmSize": "[steps('infrastructureConfig').vmSize]",
             "BoomiAuthenticationType": "[steps('atomshpereUserInformation').BoomiAuthenticationType]",
             "user": "[steps('atomshpereUserInformation').user]",
-            "password": "[steps('atomshpereUserInformation').password]",
-            "BoomiMFAAPIToken": "[steps('atomshpereUserInformation').BoomiMFAAPIToken]",
+            "password": "[if(equals(steps('atomshpereUserInformation').BoomiAuthenticationType,'Password'),steps('atomshpereUserInformation').password,string(''))]",
+            "BoomiMFAAPIToken": "[if(equals(steps('atomshpereUserInformation').BoomiAuthenticationType,'Token'),steps('atomshpereUserInformation').BoomiMFAAPIToken,string(''))]",
             "accountId": "[steps('atomshpereUserInformation').accountId]",
             "atomName": "[steps('atomshpereUserInformation').atomName]",
             "location": "[location()]"
