@@ -41,8 +41,8 @@
                         "toolTip": "The name of the virtual machine.",
                         "constraints": {
                             "required": true,
-                            "regex": "^\\w{1,64}",
-                            "validationMessage": "Virtual machine name must be between 1 and 64 characters long and special characters are not allowed."
+                            "regex": "^([-\\w\\._\\(\\)]+)$",
+                            "validationMessage": "Virtual machine name must be between 1 and 64 characters long and no special characters are allowed."
                      
                         }
                     },
@@ -190,8 +190,8 @@
             "vmSize": "[steps('infrastructureConfig').vmSize]",
             "BoomiAuthenticationType": "[steps('atomshpereUserInformation').BoomiAuthenticationType]",
             "user": "[steps('atomshpereUserInformation').user]",
-            "password": "[if(equals(steps('atomshpereUserInformation').BoomiAuthenticationType,'Password'),steps('atomshpereUserInformation').password,string(''))]",
-            "BoomiMFAAPIToken": "[if(equals(steps('atomshpereUserInformation').BoomiAuthenticationType,'Token'),steps('atomshpereUserInformation').BoomiMFAAPIToken,string(''))]",
+            "password": "[steps('atomshpereUserInformation').password]",
+            "BoomiMFAAPIToken": "[steps('atomshpereUserInformation').BoomiMFAAPIToken]",
             "accountId": "[steps('atomshpereUserInformation').accountId]",
             "atomName": "[steps('atomshpereUserInformation').atomName]",
             "location": "[location()]"
