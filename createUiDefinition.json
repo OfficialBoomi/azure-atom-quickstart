@@ -190,8 +190,8 @@
             "vmSize": "[steps('infrastructureConfig').vmSize]",
             "BoomiAuthenticationType": "[steps('atomshpereUserInformation').BoomiAuthenticationType]",
             "user": "[steps('atomshpereUserInformation').user]",
-            "password": "[steps('atomshpereUserInformation').password]",
-            "BoomiMFAAPIToken": "[steps('atomshpereUserInformation').BoomiMFAAPIToken]",
+            "password": "[if(equals(steps('atomshpereUserInformation').BoomiAuthenticationType,'Password'),steps('atomshpereUserInformation').password,string(''))]",
+            "BoomiMFAAPIToken": "[if(equals(steps('atomshpereUserInformation').BoomiAuthenticationType,'Token'),steps('atomshpereUserInformation').BoomiMFAAPIToken,string(''))]",
             "accountId": "[steps('atomshpereUserInformation').accountId]",
             "atomName": "[steps('atomshpereUserInformation').atomName]",
             "location": "[location()]"
